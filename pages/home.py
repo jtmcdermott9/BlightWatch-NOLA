@@ -268,7 +268,13 @@ layout = html.Div(children=[
 
     #4-quadrants div
     html.Div(id="grid-container",
-   
+      style={
+        'display': 'flex',         # Use flexbox layout
+        'flexDirection': 'column', # Stack items vertically
+        'justifyContent': 'center',# Center items horizontally
+        'alignItems': 'center',    # Center items vertically
+        #'height': '100vh'          # Full viewport height
+    },
     children=[
         
         html.Div(quadrant_1_content, style={'gridColumn': '1', 'gridRow': '1', 'margin-bottom':'20px'}),
