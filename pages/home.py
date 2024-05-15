@@ -32,7 +32,7 @@ quick_start_modal = html.Div(
 )
 
 #Quadrant 1 subquadrant divs
-total_observations = data.shape[0]
+total_observations = data.shape[0] #Find the total number of tracked properties for use with stats
 subquadrant_1_content = html.Div(children=[
     html.Img(src='/assets/house-png-193.png', style= {'width':'10%', 'height':'10%', 'display':'inline-block'}),
     html.H3('Total Properties Tracked', style={ 'font-style':'italic'}),
@@ -55,12 +55,13 @@ subquadrant_3_content = html.Div(children=[
     html.H3('Oldest Code Enforcement Case', style={ 'font-style':'italic'}),
     html.H3('3639 - 3641 Republic St (01/03/2014)')
     ],
-    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'20px', 'backgroundColor':'white'}
+    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'18px', 
+           'padding-bottom':'0px', 'backgroundColor':'white'}
     )
 
 most_effected_zip = data['ZIP'].value_counts().idxmax()
 subquadrant_4_content = html.Div(children=[
-    html.Img(src='/assets/broken-house-clipart.png', style= {'width':'10%', 'height':'10%', 'display':'inline-block'}),
+    html.Img(src='/assets/broken-house-clipart.png', style= {'width':'8%', 'height':'8%', 'display':'inline-block'}),
     html.H3('ZIP Code with Most Tracked Properties', style={ 'font-style':'italic'}),
     html.H3(f'{most_effected_zip} (St Claude/Lower 9th Ward)')
     ],
@@ -246,7 +247,7 @@ quadrant_4_content = html.Div(
            'display': 'flex',  # Ensures children are displayed as flex items
             'flexDirection': 'column',
             'left': '0%', #This moves the table to the center
-            'display': 'inline-block', 'maxHeight': '500px', 'overflowY': 'scroll', 'paddingLeft': '10px', #Controls for scroll frame
+            'display': 'inline-block', 'maxHeight': '500px', 'overflowY': 'scroll', 'marginRight': '5px', #Controls for scroll frame
             #'backgroundColor':'gray'
             'border':'2px solid #000000', 
            'border-radius':'10px',
@@ -280,7 +281,7 @@ layout = html.Div(children=[
         html.Div(quadrant_1_content, style={'gridColumn': '1', 'gridRow': '1', 'margin-bottom':'20px'}),
         html.Div(quadrant_2_content, style={'gridColumn': '2', 'gridRow': '1', 'margin-bottom':'20px'}),
         html.Div(quadrant_4_content, style={'gridColumn': '1', 'gridRow': '2', 'margin-bottom':'20px'}),
-        html.Div(quadrant_3_content, style={'gridColumn': '2', 'gridRow': '2', 'margin-bottom':'20px'})
+        html.Div(quadrant_3_content, style={'gridColumn': '2', 'gridRow': '2', 'margin-bottom':'20px', 'height':'75vw'})
     ]
 )
 ], )#end of desktop_layout div
