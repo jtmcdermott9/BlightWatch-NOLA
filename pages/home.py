@@ -132,15 +132,15 @@ quadrant_2_content = html.Div(
             id='new-orleans-map',
             figure=map_fig
         ), 
-        style={'width': '50vw', 
+        style={'width': '75vw', 
                'margin': '10px', 
-               'marginTop': '5px', 
+               'marginTop': '20vh', 
                'marginBottom':'0px', 
                'textAlign': 'center',
                'padding-top': '0px',
                'padding-bottom': '0px',
                'padding':'5px',
-               'left':'15%',
+               'left':'50%',
                'backgroundColor':'white', 'border':'2px solid #000000', 'border-radius':'10px'}) #end map div
 
 #Pie Chart 
@@ -189,12 +189,13 @@ quadrant_3_content = html.Div(children=[
     
     
     ],
-    style={'width':'45vw', 'height':'100vh', 'margin':'10px',
+    style={'width':'75vw', 'height':'75vh', 'margin':'10px',
            'border':'2px solid #000000', 
            'border-radius':'10px',
            'padding':'5px',
            'margin':'5px',
-           'backgroundColor':'white'
+           'backgroundColor':'white',
+           'position':'center'           
            } #Q3 Div style
 )
 quadrant_4_content = html.Div(
@@ -239,7 +240,7 @@ quadrant_4_content = html.Div(
         
     ],
     style={'position': 'relative', 
-           'width': '50vw', 
+           'width': '75vw', 
            'height': '75vh',
            'textAlign': 'center',
            'display': 'flex',  # Ensures children are displayed as flex items
@@ -255,7 +256,7 @@ quadrant_4_content = html.Div(
 ) #end table container div
 
 
-#Home page layout
+#Home page layout - Desktop
 layout = html.Div(children=[
 
 
@@ -266,31 +267,23 @@ layout = html.Div(children=[
 
 
     #4-quadrants div
-    html.Div(
-    style={
-        'display': 'grid',
-        'gridTemplateColumns': '1fr 1fr',  # Two columns
-        'gridTemplateRows': '1fr 1fr',     # Two rows
-        'height': '100vh',                 # Full height of the viewport
-        'gap': '10px'                       # Gap between grid items
-    },
+    html.Div(id="grid-container",
+   
     children=[
         
-        html.Div(quadrant_1_content, style={'gridColumn': '1', 'gridRow': '1'}),
-        html.Div(quadrant_2_content, style={'gridColumn': '2', 'gridRow': '1'}),
-        html.Div(quadrant_3_content, style={'gridColumn': '1', 'gridRow': '2'}),
-        html.Div(quadrant_4_content, style={'gridColumn': '2', 'gridRow': '2'})
+        html.Div(quadrant_1_content, style={'gridColumn': '1', 'gridRow': '1', 'margin-bottom':'20px'}),
+        html.Div(quadrant_2_content, style={'gridColumn': '2', 'gridRow': '1', 'margin-bottom':'20px'}),
+        html.Div(quadrant_4_content, style={'gridColumn': '1', 'gridRow': '2', 'margin-bottom':'20px'}),
+        html.Div(quadrant_3_content, style={'gridColumn': '2', 'gridRow': '2', 'margin-bottom':'20px'})
     ]
 )
+], )#end of desktop_layout div
 
 
 
-    
-  
-    
-], )#end of layout div
 
-#Callbacks - these make the Dash app interactive by updating Outputs when Inputs change
+
+
 
 #Map -> Table - this actually works!!
 @callback(

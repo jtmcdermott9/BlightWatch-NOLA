@@ -135,3 +135,11 @@ html.Div(
                 'width':'45vw',
                 'height':'20vh',}# Graph div Style
     ),
+
+#Grid style attribute
+ style={      'display': 'grid',
+        'gridTemplateColumns': '1fr',  # Two columns
+        'gridTemplateRows': 'repeat(4, 1fr) ',     # Two rows
+        'height': '100vh',                 # Full height of the viewport
+        'gap': '10px'                       # Gap between grid items
+    },
