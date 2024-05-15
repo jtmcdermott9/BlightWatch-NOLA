@@ -1,8 +1,6 @@
 #Imports
 import dash
-from dash import dcc, html, dash_table, Input, Output, State, callback, callback_context
-import plotly.express as px
-import pandas as pd
+from dash import html
 
 dash.register_page(__name__,)
 
