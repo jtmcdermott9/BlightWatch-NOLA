@@ -10,15 +10,24 @@ Original file is located at
 """
 
 import pandas as pd
+#from geopy.geocoders import Nominatim
 from geopy.geocoders import Nominatim
 import mysql.connector
 from mysql.connector import Error
+import json
+#Open config file
+# Read configuration from JSON file
+with open('config.json') as f:
+    config = json.load(f)
 
-# Database connection parameters setup for easy modification and visibility
-DB_HOST = "sql5.freesqldatabase.com"
-DB_USER = "sql5680691"
-DB_PASSWORD = "g4fgFKv83C"
-DB_DATABASE = "sql5680691"
+#Database connection for local editing
+
+DB_HOST = config["host"] 
+DB_USER = config["username"] 
+DB_PASSWORD = config["password"] 
+DB_DATABASE = config["database"] 
+port = config["port"]
+
 
 # Initialize the geolocator using Nominatim API with a user-defined agent name ('etl_nola')
 geolocator = Nominatim(user_agent="etl_nola")
@@ -64,7 +73,7 @@ def insert_record(cursor, record):
 
 def main():
     df = load_and_transform_data()
-
+    print(df.columns)
     try:
         # Establish connection to database
         connection = mysql.connector.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_DATABASE)

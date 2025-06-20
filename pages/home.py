@@ -34,7 +34,7 @@ quick_start_modal = html.Div(
 #Quadrant 1 subquadrant divs
 total_observations = data.shape[0] #Find the total number of tracked properties for use with stats
 subquadrant_1_content = html.Div(children=[
-    html.Img(src='/assets/house-png-193.png', style= {'width':'10%', 'height':'10%', 'display':'inline-block'}),
+    html.Img(src='/assets/house-png-193.png', style= {'width':'25px', 'height':'25px', 'display':'inline-block'}),
     html.H3('Total Properties Tracked', style={ 'font-style':'italic'}),
     html.H3(f'{total_observations}')
     ],
@@ -44,28 +44,30 @@ subquadrant_1_content = html.Div(children=[
 
 pending_311_complaints = data[data["Request Status"] == "Pending"].shape[0]
 subquadrant_2_content = html.Div(children=[
-    html.Img(src='/assets/phone-clipart.png', style= {'width':'10%', 'height':'10%', 'display':'inline-block', }),
+    html.Img(src='/assets/phone-clipart.png', style= {'width':'25px', 'height':'25px', 'display':'inline-block', }),
     html.H3('Pending 311 Complaints', style={ 'font-style':'italic'}),
     html.H3(f'{pending_311_complaints}')
     ],
-    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'20px','backgroundColor':'white'}
+    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'20px',
+           'backgroundColor':'white'}
     )
 subquadrant_3_content = html.Div(children=[
-    html.Img(src='/assets/gavel-clipart.png', style= {'width':'10%', 'height':'10%', 'display':'inline-block'}),
+    html.Img(src='/assets/gavel-clipart.png', style= {'width':'30px', 'height':'25px', 'display':'inline-block'}),
     html.H3('Oldest Code Enforcement Case', style={ 'font-style':'italic'}),
     html.H3('3639 - 3641 Republic St (01/03/2014)')
     ],
-    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'18px', 
-           'padding-bottom':'0px', 'backgroundColor':'white'}
+    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'20px',
+           'backgroundColor':'white'}
     )
 
 most_effected_zip = data['ZIP'].value_counts().idxmax()
 subquadrant_4_content = html.Div(children=[
-    html.Img(src='/assets/broken-house-clipart.png', style= {'width':'8%', 'height':'8%', 'display':'inline-block'}),
+    html.Img(src='/assets/broken-house-clipart.png', style= {'width':'25px', 'height':'25px', 'display':'inline-block'}),
     html.H3('ZIP Code with Most Tracked Properties', style={ 'font-style':'italic'}),
     html.H3(f'{most_effected_zip} (St Claude/Lower 9th Ward)')
     ],
-    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'10px', 'backgroundColor':'white'}
+    style={'text-align':'center', 'border':'2px solid #000000', 'border-radius':'10px', 'padding-top':'20px',
+           'backgroundColor':'white'}
     )
 
 #Main quadrant divs
@@ -307,51 +309,7 @@ def update_table(selectedData):
     
     return filtered_df.to_dict('records')
 
-#Table -> Map 
-@callback(
-    Output('new-orleans-map', 'figure'),
-    [Input('nola-blight-table', 'filter_query'),]
-    #State('nola-blight-table', 'data')
-)
 
-def update_map(filter_query):
-    
-    #print(f"This is the filter query: {filter_query}")
-    
-    filtered_data = data.query(filter_query)
-
-    figure = dcc.Graph(
-        #Set id
-            id='new-orleans-map',
-            figure=px.scatter_mapbox(
-                #Use df from database
-                filtered_data,
-                #Use Lat/Long in Data
-                lat = 'Latitude',
-                lon = 'Longitude',
-
-                #Find correct projection and zoom to display city of New Orleans
-            
-                #?TO DO: Make this parameter toggalable by user to change map style
-                mapbox_style='carto-positron',
-
-                center = new_orleans_coordinates,
-
-                #Title of data set being used
-                title='Tracked Properties',
-                zoom = 10,
-                
-                #Hover Options
-                color='Source',
-                color_discrete_map= {'311 Calls': 'blue', 'Code Enforcement': 'red'},
-                hover_name= 'Address',
-                hover_data= {'Request Status':True, 'Source':True, 'Object ID':True, 'Case Filed Date':True, 
-                             'Open/Closed':True,} #Controls columns that display on hover
-            
-
-
-        ))
-    return figure
 
 # Callback to toggle the display of the quick start guide modal
 @callback(

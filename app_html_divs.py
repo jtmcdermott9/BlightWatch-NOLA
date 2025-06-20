@@ -1,4 +1,4 @@
-
+###THIS FILE IS NOT FUNCTIONAL IT IS A UTILITY TO HELP KEEP TRACK OF DIFFERENT DIV CONTENT###
 #MAP DIV
     html.Div(
         dcc.Graph(
@@ -143,3 +143,49 @@ html.Div(
         'height': '100vh',                 # Full height of the viewport
         'gap': '10px'                       # Gap between grid items
     },
+
+#Table -> Map 
+@callback(
+    Output('new-orleans-map', 'figure'),
+    [Input('nola-blight-table', 'filter_query'),]
+    #State('nola-blight-table', 'data')
+)
+
+def update_map(filter_query):
+    
+    #print(f"This is the filter query: {filter_query}")
+    
+    filtered_data = data.query(filter_query)
+
+    figure = dcc.Graph(
+        #Set id
+            id='new-orleans-map',
+            figure=px.scatter_mapbox(
+                #Use df from database
+                filtered_data,
+                #Use Lat/Long in Data
+                lat = 'Latitude',
+                lon = 'Longitude',
+
+                #Find correct projection and zoom to display city of New Orleans
+            
+                #?TO DO: Make this parameter toggalable by user to change map style
+                mapbox_style='carto-positron',
+
+                center = new_orleans_coordinates,
+
+                #Title of data set being used
+                title='Tracked Properties',
+                zoom = 10,
+                
+                #Hover Options
+                color='Source',
+                color_discrete_map= {'311 Calls': 'blue', 'Code Enforcement': 'red'},
+                hover_name= 'Address',
+                hover_data= {'Request Status':True, 'Source':True, 'Object ID':True, 'Case Filed Date':True, 
+                             'Open/Closed':True,} #Controls columns that display on hover
+            
+
+
+        ))
+    return figure

@@ -1,20 +1,23 @@
 import pandas as pd
 import mysql.connector
+import json
+import MySQLdb
+
+#Open config file
+# Read configuration from JSON file
+with open('config.json') as f:
+    config = json.load(f)
 
 #Database connection for local editing
 
-host = "sql5.freesqldatabase.com" 
-user = "sql5680691" 
-password = "g4fgFKv83C" 
-database = "sql5680691" 
-port = 3306 
+host = config["host"] 
+user = config["username"] 
+password = config["password"] 
+database = config["database"] 
+port = config["port"]
 
-#Database connection for production
-'''host = "jtmcdermott9.mysql.pythonanywhere-services.com"
-user = "jtmcdermott9"
-password = "Ihatemysql123"
-database = "jtmcdermott9$capstone"
-port = 3306'''
+#close config.json
+f.close()
 
 connection = mysql.connector.connect(
                                     host=host,     
@@ -36,8 +39,9 @@ try:
     df = pd.DataFrame(rows, columns=columns)
     
 
-except:
-    print("Error loading data")
+except (MySQLdb.Error, MySQLdb.Warning) as e:
+        print(e)
+    
 else:
     print("Data loaded successfully into dataframe")
 finally:
@@ -47,24 +51,24 @@ finally:
 #print(df["stage"])
 #Reorder column names
 data_cols = ['final_address',
-             'data_source',
+             'Data Source',
              'request_status',
              'stage',
              'objectid',
              'casefiled',
              #'o_c',
-             'zipcode',
+             'zip_code',
              'latitude',
              'longitude']
 
-
+print(f'df:{df}')
 #Set data to our df from server
 data = df[data_cols]
 
 #Dictionary mapping to rename columns to more readable format 
 new_column_names = {
     'final_address':'Address',
-    'data_source': 'Source',
+    'Data Source': 'Source',
     'request_status':'Request Status',
     'objectid':'Object ID',
     'casefiled':'Case Filed Date',
@@ -72,7 +76,7 @@ new_column_names = {
     'latitude':'Latitude',
     'longitude':'Longitude',
     'stage':'Stage',
-    'zipcode':'ZIP'
+    'zip_code':'ZIP'
 }
 
 data = data.rename(columns=new_column_names)
